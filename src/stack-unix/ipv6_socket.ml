@@ -38,3 +38,6 @@ let get_ip _ = [Ipaddr.V6.unspecified]
 let configured_ips _ = [Ipaddr.V6.Prefix.of_string_exn "::/0"]
 let src _ ~dst:_ = raise (Failure "Not implemented")
 let pseudoheader _ ?src:_ _ _ _ = raise (Failure "Not implemented")
+
+let join_multicast_group _ _ = Lwt.return_unit
+let leave_multicast_group _ _ = Lwt.return_unit

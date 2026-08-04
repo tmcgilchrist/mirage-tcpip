@@ -29,4 +29,14 @@ module type V4V6 = sig
   (** [listen t] requests that the stack listen for traffic on the
       network interface associated with the stack, and demultiplex
       traffic to the appropriate callbacks. *)
+
+  val join_multicast_group : t -> Ipaddr.t -> unit Lwt.t
+  (** [join_multicast_group t group] joins the multicast [group] so that
+      datagrams destined to it are delivered to the appropriate listeners
+      (e.g. a [UDP.listen] on the mDNS port for [224.0.0.251]).  Joining a
+      non-multicast address has no effect. *)
+
+  val leave_multicast_group : t -> Ipaddr.t -> unit Lwt.t
+  (** [leave_multicast_group t group] reverses a previous
+      {!join_multicast_group}. *)
 end

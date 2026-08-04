@@ -95,4 +95,15 @@ module type S = sig
   val mtu: t -> dst:ipaddr -> int
   (** [mtu ~dst ip] is the Maximum Transmission Unit of the [ip] i.e. the
       maximum size of the payload, not including the IP header. *)
+
+  val join_multicast_group : t -> ipaddr -> unit Lwt.t
+  (** [join_multicast_group t group] arranges for datagrams destined to the
+      multicast [group] to be accepted by {!input}.  For socket-based stacks
+      this performs an [IP_ADD_MEMBERSHIP], for the direct stack it records the
+      group so the input path stops discarding it.  Joining a non-multicast
+      address has no effect. *)
+
+  val leave_multicast_group : t -> ipaddr -> unit Lwt.t
+  (** [leave_multicast_group t group] reverses a previous
+      {!join_multicast_group}. *)
 end

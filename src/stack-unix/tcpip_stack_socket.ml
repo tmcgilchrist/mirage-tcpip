@@ -35,6 +35,9 @@ module V4V6 = struct
   let tcp { tcp; _ } = tcp
   let ip _ = ()
 
+  let join_multicast_group { udp; _ } group = UDP.join_multicast_group udp group
+  let leave_multicast_group { udp; _ } group = UDP.leave_multicast_group udp group
+
   let listen t = t.switched_off
 
   let connect udp tcp =

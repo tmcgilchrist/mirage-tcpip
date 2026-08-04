@@ -35,4 +35,6 @@ module type S = sig
   [@@ocaml.deprecated "this function will be removed soon, use [configured_ips] instead."]
   val configured_ips: t -> prefix list
   val mtu: t -> dst:ipaddr -> int
+  val join_multicast_group : t -> ipaddr -> unit Lwt.t
+  val leave_multicast_group : t -> ipaddr -> unit Lwt.t
 end
