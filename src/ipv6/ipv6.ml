@@ -118,11 +118,12 @@ module Make (N : Mirage_net.S)
   let configured_ips t =
     Ndpv6.configured_ips t.ctx
 
-  (* IPv6 multicast membership (MLD) is not yet implemented, NDP already
-     receives the solicited-node groups it needs. Provided to satisfy the
-     {!Tcpip.Ip.S} interface. *)
+  (* NDP already receives the solicited-node groups it needs, and these stubs
+     satisfy the {!Tcpip.Ip.S} interface.
+     TODO: implement IPv6 multicast membership (MLD). *)
   let join_multicast_group _ _ = Lwt.return_unit
   let leave_multicast_group _ _ = Lwt.return_unit
+  let multicast_groups _ = []
 
   let pseudoheader t ?src:source dst proto len =
     let ph = Cstruct.create (16 + 16 + 8) in

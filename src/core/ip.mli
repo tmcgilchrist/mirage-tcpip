@@ -98,12 +98,23 @@ module type S = sig
 
   val join_multicast_group : t -> ipaddr -> unit Lwt.t
   (** [join_multicast_group t group] arranges for datagrams destined to the
-      multicast [group] to be accepted by {!input}.  For socket-based stacks
-      this performs an [IP_ADD_MEMBERSHIP], for the direct stack it records the
-      group so the input path stops discarding it.  Joining a non-multicast
-      address has no effect. *)
+      multicast [group] to be accepted by {!input}.  For the socket stacks
+      this performs an [IP_ADD_MEMBERSHIP].  For the direct stack it records
+      the group so the input path stops discarding it.  Joining an address
+      that is not multicast has no effect.
+
+      This delivers link local multicast, the [224.0.0.0/24] range (which
+      includes mDNS's [224.0.0.251]).  Switches flood that range and routers
+      never forward it, so the frames arrive without any membership
+      announcement on the wire.  Groups outside that range are not delivered,
+      because forwarding them relies on IGMP membership reports that this stack
+      does not emit. *)
 
   val leave_multicast_group : t -> ipaddr -> unit Lwt.t
   (** [leave_multicast_group t group] reverses a previous
       {!join_multicast_group}. *)
+
+  val multicast_groups : t -> ipaddr list
+  (** [multicast_groups t] is the list of multicast groups currently joined
+      via {!join_multicast_group}. *)
 end

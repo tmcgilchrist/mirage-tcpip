@@ -40,3 +40,4 @@ let pseudoheader _ ?src:_ _ _ _ = raise (Failure "Not implemented")
 
 let join_multicast_group _ _ = Lwt.return_unit
 let leave_multicast_group _ _ = Lwt.return_unit
+let multicast_groups _ = []

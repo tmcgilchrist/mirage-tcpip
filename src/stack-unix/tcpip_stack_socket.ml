@@ -37,6 +37,7 @@ module V4V6 = struct
 
   let join_multicast_group { udp; _ } group = UDP.join_multicast_group udp group
   let leave_multicast_group { udp; _ } group = UDP.leave_multicast_group udp group
+  let multicast_groups { udp; _ } = UDP.multicast_groups udp
 
   let listen t = t.switched_off
 

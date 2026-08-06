@@ -37,4 +37,5 @@ module type S = sig
   val mtu: t -> dst:ipaddr -> int
   val join_multicast_group : t -> ipaddr -> unit Lwt.t
   val leave_multicast_group : t -> ipaddr -> unit Lwt.t
+  val multicast_groups : t -> ipaddr list
 end

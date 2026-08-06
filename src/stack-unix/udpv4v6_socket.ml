@@ -158,6 +158,8 @@ let leave_multicast_group t group =
     t.listen_fds ;
   Lwt.return_unit
 
+let multicast_groups t = t.groups
+
 let disconnect t =
   Hashtbl.fold (fun _ (fd, fd') r ->
       r >>= fun () ->
